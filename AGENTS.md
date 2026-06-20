@@ -126,12 +126,12 @@ When creating or modifying a component, update `dependencies.json` if it introdu
 
 ## CSS
 
-| File | Role |
-| --- | --- |
-| `app.css` | Tailwind 4 entry: imports, `@source`, theme |
-| `bladcn-base.css` | Reset and base utilities |
-| `bladcn-theme.css` / `bladcn-theme.dark.css` | shadcn tokens (light/dark) |
-| `sonner.css` | Sonner toast styles |
+| File                                         | Role                                        |
+| -------------------------------------------- | ------------------------------------------- |
+| `app.css`                                    | Tailwind 4 entry: imports, `@source`, theme |
+| `bladcn-base.css`                            | Reset and base utilities                    |
+| `bladcn-theme.css` / `bladcn-theme.dark.css` | shadcn tokens (light/dark)                  |
+| `sonner.css`                                 | Sonner toast styles                         |
 
 Use semantic tokens (`bg-primary`, `text-muted-foreground`, etc.), not hardcoded colors. Tailwind classes belong in Blade, not CSS, except for global tokens.
 
@@ -147,14 +147,14 @@ The default registry for `ailuracode/bladcn` points to `../bladcn-components`.
 
 Host project requirements:
 
-| Dependency | Purpose |
-| --- | --- |
-| `livewire/blaze` | `@blaze` |
-| `mallardduck/blade-lucide-icons` | `<x-ui.icon>` |
-| `ailuracode/bladcn` | `ClassResolver`, `Toast`, `AsChildSlot`, `@asChild` |
-| `resources/js/app.js` | `import './bladcn';` |
-| `resources/css/app.css` | Tailwind 4 + tokens |
-| Layout | `@include('partials.bladcn-boot')` + `@stack('bladcn-scripts')` |
+| Dependency                       | Purpose                                                         |
+| -------------------------------- | --------------------------------------------------------------- |
+| `livewire/blaze`                 | `@blaze`                                                        |
+| `mallardduck/blade-lucide-icons` | `<x-ui.icon>`                                                   |
+| `ailuracode/bladcn`              | `ClassResolver`, `Toast`, `AsChildSlot`, `@asChild`             |
+| `resources/js/app.js`            | `import './bladcn';`                                            |
+| `resources/css/app.css`          | Tailwind 4 + tokens                                             |
+| Layout                           | `@include('partials.bladcn-boot')` + `@stack('bladcn-scripts')` |
 
 ## Code formatting
 

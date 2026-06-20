@@ -16,16 +16,16 @@ This repository is the **single source of truth** for CSS, JavaScript, and Blade
 
 ## Components
 
-| Category | Components |
-| --- | --- |
-| Layout | `sidebar`, `resizable`, `scroll-area`, `separator`, `aspect-ratio` |
-| Forms | `button`, `input`, `textarea`, `select`, `checkbox`, `radio-group`, `switch`, `slider`, `field`, `form`, `label`, `input-group`, `input-otp`, `toggle`, `toggle-group`, `calendar` |
-| Overlays | `dialog`, `alert-dialog`, `sheet`, `drawer`, `popover`, `hover-card`, `tooltip`, `dropdown-menu`, `context-menu`, `menubar`, `navigation-menu` |
-| Data display | `table`, `data-table`, `card`, `badge`, `avatar`, `skeleton`, `progress`, `chart`, `typography`, `kbd` |
-| Navigation | `breadcrumb`, `pagination`, `tabs`, `accordion`, `collapsible` |
-| Feedback | `alert`, `sonner`, `spinner` |
-| Advanced | `command`, `command-block`, `combobox`, `carousel`, `highlighted-code`, `button-group` |
-| Primitives | `abstract`, `icon` |
+| Category     | Components                                                                                                                                                                         |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Layout       | `sidebar`, `resizable`, `scroll-area`, `separator`, `aspect-ratio`                                                                                                                 |
+| Forms        | `button`, `input`, `textarea`, `select`, `checkbox`, `radio-group`, `switch`, `slider`, `field`, `form`, `label`, `input-group`, `input-otp`, `toggle`, `toggle-group`, `calendar` |
+| Overlays     | `dialog`, `alert-dialog`, `sheet`, `drawer`, `popover`, `hover-card`, `tooltip`, `dropdown-menu`, `context-menu`, `menubar`, `navigation-menu`                                     |
+| Data display | `table`, `data-table`, `card`, `badge`, `avatar`, `skeleton`, `progress`, `chart`, `typography`, `kbd`                                                                             |
+| Navigation   | `breadcrumb`, `pagination`, `tabs`, `accordion`, `collapsible`                                                                                                                     |
+| Feedback     | `alert`, `sonner`, `spinner`                                                                                                                                                       |
+| Advanced     | `command`, `command-block`, `combobox`, `carousel`, `highlighted-code`, `button-group`                                                                                             |
+| Primitives   | `abstract`, `icon`                                                                                                                                                                 |
 
 ## How it works
 
@@ -94,19 +94,19 @@ Copy or merge the CSS entry from this registry into `resources/css/app.css`:
 @import "./bladcn-theme.css";
 ```
 
-| File | Purpose |
-| --- | --- |
-| `bladcn-base.css` | Base reset and utilities |
-| `bladcn-theme.css` | Light-mode shadcn tokens (`--primary`, `--radius`, etc.) |
-| `bladcn-theme.dark.css` | Dark-mode overrides (import in your dark theme setup) |
-| `sonner.css` | Toast styles for `<x-ui.sonner>` |
+| File                    | Purpose                                                  |
+| ----------------------- | -------------------------------------------------------- |
+| `bladcn-base.css`       | Base reset and utilities                                 |
+| `bladcn-theme.css`      | Light-mode shadcn tokens (`--primary`, `--radius`, etc.) |
+| `bladcn-theme.dark.css` | Dark-mode overrides (import in your dark theme setup)    |
+| `sonner.css`            | Toast styles for `<x-ui.sonner>`                         |
 
 ### 5. Configure JavaScript
 
 Import the bladcn helpers from your Vite entry (`resources/js/app.js`):
 
 ```js
-import './bladcn';
+import "./bladcn";
 ```
 
 `bladcn.js` registers shared Alpine factories (`bladcnScrollArea`, `buttonCopyCode`, carousel, etc.). Component-specific scripts are pushed via `@pushOnce('bladcn-scripts')` in each Blade file.
@@ -264,18 +264,18 @@ Each component folder may contain multiple Blade partials (`trigger.blade.php`, 
 
 ## Host project requirements
 
-| Dependency | Purpose |
-| --- | --- |
-| PHP 8.2+ | Match expressions, typed properties |
-| Laravel 12+ | Blade components, Vite |
-| Tailwind CSS 4 | Utility classes and `@source` |
-| `ailuracode/bladcn` | `ClassResolver`, `AsChildSlot`, `Toast`, `@asChild` |
-| `livewire/blaze` | `@blaze(fold: …)` directive for Blade optimization |
-| `mallardduck/blade-lucide-icons` | Lucide icons for `<x-ui.icon>` |
-| Alpine.js | Bundled with Livewire 3 / included in your JS stack |
-| `resources/js/app.js` | `import './bladcn';` |
-| `resources/css/app.css` | Tailwind 4 + bladcn theme imports |
-| Layout | `@include('partials.bladcn-boot')` + `@stack('bladcn-scripts')` |
+| Dependency                       | Purpose                                                         |
+| -------------------------------- | --------------------------------------------------------------- |
+| PHP 8.2+                         | Match expressions, typed properties                             |
+| Laravel 12+                      | Blade components, Vite                                          |
+| Tailwind CSS 4                   | Utility classes and `@source`                                   |
+| `ailuracode/bladcn`              | `ClassResolver`, `AsChildSlot`, `Toast`, `@asChild`             |
+| `livewire/blaze`                 | `@blaze(fold: …)` directive for Blade optimization              |
+| `mallardduck/blade-lucide-icons` | Lucide icons for `<x-ui.icon>`                                  |
+| Alpine.js                        | Bundled with Livewire 3 / included in your JS stack             |
+| `resources/js/app.js`            | `import './bladcn';`                                            |
+| `resources/css/app.css`          | Tailwind 4 + bladcn theme imports                               |
+| Layout                           | `@include('partials.bladcn-boot')` + `@stack('bladcn-scripts')` |
 
 ## Conventions
 
@@ -314,9 +314,9 @@ Blade files are formatted with `@shufo/prettier-plugin-blade` (4-space indent, s
 
 ## Packages
 
-| Package | Registry |
-| --- | --- |
-| `ailuracode/bladcn` | Composer — PHP runtime helpers |
+| Package                         | Registry                             |
+| ------------------------------- | ------------------------------------ |
+| `ailuracode/bladcn`             | Composer — PHP runtime helpers       |
 | `@ailuracode/bladcn-components` | npm — formatting tooling (this repo) |
 
 ## License
