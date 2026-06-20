@@ -1,0 +1,23 @@
+{
+  "overrides": [
+    {
+      "files": "resources/views/**/*.blade.php",
+      "options": {
+        "plugins": ["@shufo/prettier-plugin-blade"],
+        "parser": "blade",
+        "tabWidth": 4,
+        "printWidth": 80,
+        "singleQuote": true,
+        "wrapAttributesMinAttrs": 0,
+        "wrapAttributes": "force",
+        "sortHtmlAttributes": "alphabetical",
+        "sortTailwindcssClasses": true,
+        "noPhpSyntaxCheck": false,
+        "indentInnerHtml": true,
+        "trailingCommaPHP": true,
+        "componentPrefix": "x-,livewire:",
+        "phpVersion": "8.4"
+      }
+    }
+  ]
+}

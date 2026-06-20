@@ -1,0 +1,3 @@
+{
+  "dependencies": ["abstract", "body-scroll-lock", "dialog"]
+}

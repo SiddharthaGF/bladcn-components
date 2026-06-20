@@ -1,0 +1,14 @@
+{
+  "name": "@ailuracode/bladcn-components",
+  "private": true,
+  "type": "module",
+  "description": "shadcn/ui Blade components for Laravel",
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@shufo/prettier-plugin-blade": "1.16.2",
+    "prettier": "3.8.4"
+  }
+}

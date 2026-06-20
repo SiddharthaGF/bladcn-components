@@ -1,0 +1,27 @@
+{
+  "name": "ailuracode/bladcn",
+  "description": "shadcn/ui Blade components for Laravel",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "php": "^8.2"
+  },
+  "require-dev": {
+    "illuminate/support": "^12.0|^13.0",
+    "illuminate/view": "^12.0|^13.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "AiluraCode\\Bladcn\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "AiluraCode\\Bladcn\\BladcnServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}

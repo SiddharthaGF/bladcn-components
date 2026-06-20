@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@import "tw-animate-css";
+@import "./sonner.css";
+
+@source '../views';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+@import "./bladcn-base.css";
+@import "./bladcn-theme.css";
