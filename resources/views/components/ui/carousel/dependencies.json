@@ -1,4 +1,5 @@
 {
   "dependencies": ["button", "icon"],
-  "npm": ["embla-carousel", "embla-carousel-autoplay"]
+  "npm": ["embla-carousel", "embla-carousel-autoplay"],
+  "js": ["bladcn/carousel.js"]
 }

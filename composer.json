@@ -7,13 +7,49 @@
     "php": "^8.2"
   },
   "require-dev": {
-    "illuminate/support": "^12.0|^13.0",
-    "illuminate/view": "^12.0|^13.0"
+    "driftingly/rector-laravel": "^2.5",
+    "laravel/framework": "^12.0|^13.0",
+    "laravel/pint": "^1.29",
+    "larastan/larastan": "^3.10",
+    "orchestra/testbench": "^10.0",
+    "phpstan/phpstan": "^2.2",
+    "phpstan/phpstan-phpunit": "^2.0",
+    "phpstan/phpstan-strict-rules": "^2.0",
+    "phpunit/phpunit": "^11.0",
+    "rector/rector": "^2.4"
   },
   "autoload": {
     "psr-4": {
       "AiluraCode\\Bladcn\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "AiluraCode\\Bladcn\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "lint": [
+      "rector",
+      "pint --parallel"
+    ],
+    "test:lint": [
+      "pint --parallel --test",
+      "rector --dry-run"
+    ],
+    "test:types": "@phpstan",
+    "test:unit": "phpunit",
+    "test": [
+      "@test:unit",
+      "@test:lint",
+      "@test:types"
+    ],
+    "ci": "@test",
+    "phpstan": "phpstan analyse -c phpstan.neon.dist --memory-limit=512M",
+    "rector": "rector process",
+    "rector:check": "rector process --dry-run",
+    "pint": "pint",
+    "pint:check": "pint --parallel --test"
   },
   "extra": {
     "laravel": {

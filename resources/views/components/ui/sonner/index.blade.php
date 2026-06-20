@@ -16,9 +16,10 @@
     $mobileOffsetValue = is_numeric($mobileOffset)
         ? "{$mobileOffset}px"
         : $mobileOffset;
-    $flashToast = session(\AiluraCode\Bladcn\Support\Toast::SESSION_KEY);
+    $flashToast = \AiluraCode\Bladcn\Support\Toast::fromSession();
 
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $classResolver = new \AiluraCode\Bladcn\Support\ClassResolver();
+    $presetClass = $classResolver->add(
         'z-100 pointer-events-none fixed inset-0',
     );
 
@@ -27,6 +28,10 @@
         'style' => implode(
             '; ',
             array_filter([
+                '--normal-bg: var(--popover)',
+                '--normal-text: var(--popover-foreground)',
+                '--normal-border: var(--border)',
+                '--border-radius: var(--radius)',
                 "--offset-top: {$offsetValue}",
                 "--offset-right: {$offsetValue}",
                 "--offset-bottom: {$offsetValue}",
@@ -257,6 +262,10 @@
                         '--width': '356px',
                         '--gap': '14px',
                         '--front-toast-height': `${frontHeight}px`,
+                        '--normal-bg': 'var(--popover)',
+                        '--normal-text': 'var(--popover-foreground)',
+                        '--normal-border': 'var(--border)',
+                        '--border-radius': 'var(--radius)',
                         minHeight: `${minHeight}px`,
                     };
                 },

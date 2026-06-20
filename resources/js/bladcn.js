@@ -3,8 +3,6 @@
  * Load this file from resources/js/app.js: import './bladcn';
  * Helpers are also registered on demand via @pushOnce('bladcn-scripts') in UI components.
  */
-import { registerBladcnCarousel } from "./bladcn/carousel.js";
-
 window.bladcnOnAlpine =
   window.bladcnOnAlpine ??
   ((callback) => {
@@ -32,8 +30,6 @@ window.bladcnRegister =
       Alpine.data(name, factory);
     });
   });
-
-registerBladcnCarousel();
 
 bladcnRegister("bladcnScrollArea", () => ({
   updateThumbs() {

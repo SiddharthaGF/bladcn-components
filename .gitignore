@@ -2,4 +2,9 @@
 Thumbs.db
 /node_modules/
 /vendor/
+.phpstan-cache/
+.phpunit.cache/
+.phpunit.result.cache
+.rector-cache/
+/rector.php.bak
 composer.lock

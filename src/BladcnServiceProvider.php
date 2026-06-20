@@ -7,9 +7,11 @@ namespace AiluraCode\Bladcn;
 use AiluraCode\Bladcn\Support\ClassResolver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
+use Override;
 
-class BladcnServiceProvider extends ServiceProvider
+final class BladcnServiceProvider extends ServiceProvider
 {
+    #[Override]
     public function register(): void
     {
         $this->app->singleton(ClassResolver::class);
@@ -18,9 +20,7 @@ class BladcnServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->callAfterResolving(BladeCompiler::class, function (BladeCompiler $blade): void {
-            $blade->directive('asChild', function (string $expression): string {
-                return "<?php echo app(\\AiluraCode\\Bladcn\\Support\\ClassResolver::class)->asChild({$expression}); ?>";
-            });
+            $blade->directive('asChild', fn (string $expression): string => sprintf('<?php echo app('.ClassResolver::class.'::class)->asChild(%s); ?>', $expression));
         });
     }
 }
