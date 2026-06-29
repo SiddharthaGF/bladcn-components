@@ -8,7 +8,7 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'relative flex w-full cursor-default items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-hidden select-none focus:bg-accent focus:text-accent-foreground hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=\'size-\'])]:size-4 [&_[data-slot=context-menu-checkbox-item-indicator]_svg]:size-4',
     );
 

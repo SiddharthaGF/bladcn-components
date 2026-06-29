@@ -6,7 +6,7 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'flex flex-col gap-1.5 p-4',
     );
 

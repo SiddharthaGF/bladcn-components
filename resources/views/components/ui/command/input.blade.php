@@ -7,11 +7,11 @@
 ])
 
 @php
-    $inputGroupClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $inputGroupClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'h-8! rounded-lg! border-input/30 bg-input/30 shadow-none! *:data-[slot=input-group-addon]:pl-2!',
     );
 
-    $inputClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $inputClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'w-full text-sm outline-hidden disabled:cursor-not-allowed disabled:opacity-50',
     );
 

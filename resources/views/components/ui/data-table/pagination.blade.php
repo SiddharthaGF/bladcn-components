@@ -6,7 +6,7 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'flex items-center justify-between px-2',
     );
 

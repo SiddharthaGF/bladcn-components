@@ -10,7 +10,7 @@
 @php
     $transition = filter_var($transition, FILTER_VALIDATE_BOOLEAN);
 
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'overflow-hidden',
     );
 

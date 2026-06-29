@@ -6,7 +6,7 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'font-medium',
     );
 

@@ -7,7 +7,7 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'flex size-full flex-col overflow-hidden rounded-xl! bg-popover p-1 text-popover-foreground',
     );
 

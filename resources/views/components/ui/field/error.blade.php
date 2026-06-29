@@ -20,7 +20,7 @@
     $hasSlot = trim($slot->toHtml()) !== '';
     $hasMessages = $messages->isNotEmpty() || $hasSlot;
 
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'text-sm font-normal text-destructive',
     );
 

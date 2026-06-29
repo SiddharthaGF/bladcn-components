@@ -1,3 +1,4 @@
 {
-  "dependencies": ["icon"]
+  "dependencies": ["icon"],
+  "npm": ["@ailuracode/alpine-accordion", "@alpinejs/collapse"]
 }

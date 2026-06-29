@@ -7,7 +7,7 @@
 ])
 
 @php
-    $tableClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $tableClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'w-full caption-bottom text-sm',
     );
 

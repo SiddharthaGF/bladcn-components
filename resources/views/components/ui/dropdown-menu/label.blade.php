@@ -7,7 +7,7 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'px-2 py-1.5 text-xs font-medium text-muted-foreground data-[inset]:pl-8',
     );
 

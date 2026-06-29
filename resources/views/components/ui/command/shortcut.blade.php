@@ -6,7 +6,7 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'ml-auto text-xs tracking-widest text-muted-foreground group-data-selected/command-item:text-foreground',
     );
 

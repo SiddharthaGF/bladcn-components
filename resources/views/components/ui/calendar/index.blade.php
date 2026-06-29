@@ -9,7 +9,7 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'group/calendar w-fit rounded-md border bg-background p-3 [--cell-size:--spacing(8)]',
     );
 

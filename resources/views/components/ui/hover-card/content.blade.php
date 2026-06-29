@@ -9,7 +9,7 @@
 ])
 
 @php
-    $positionClass = new \AiluraCode\Bladcn\Support\ClassResolver()
+    $positionClass = (new \AiluraCode\Bladcn\Support\ClassResolver())
         ->add('absolute z-50 pointer-events-none w-max max-w-none')
         ->add(
             match ($side) {
@@ -37,7 +37,7 @@
                 : '',
         );
 
-    $surfaceClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $surfaceClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'pointer-events-auto w-64 shrink-0 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-hidden data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
     );
 

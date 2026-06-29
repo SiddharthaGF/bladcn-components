@@ -28,7 +28,7 @@
         ->filter()
         ->implode(' ');
 
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'relative flex aspect-video justify-center text-xs',
     );
 

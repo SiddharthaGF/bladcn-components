@@ -16,11 +16,11 @@
 
     $initiallyOpen = in_array($value, $defaultOpen, true);
 
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'overflow-hidden text-sm',
     );
 
-    $innerClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $innerClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'pt-0 pb-4',
     );
 
@@ -34,13 +34,17 @@
     }
 @endphp
 
-<div :data-state="isOpen(@js($value)) ? 'open' : 'closed'"
-    {{ $attributes->merge($presetAttributes)->class([$presetClass]) }}
-    @if ($transition) x-collapse.duration.200ms @endif
+<div :data-state="($store.accordion.isOpen(accordionId, @js($value)) || (
+    @js($initiallyOpen) && !Object.hasOwn($store.accordion.groups[
+        accordionId]?.open ?? {}, @js($value)))) ? 'open' :
+'closed'"
+    {{ $attributes->merge($presetAttributes)->class([$presetClass, $class]) }}
+    @if ($transition) x-collapse @endif
     @unless ($initiallyOpen)
         x-cloak
     @endunless
-    x-show="isOpen(@js($value))">
+    x-bind="$store.accordion.panelProps(accordionId, @js($value))"
+    x-show="$store.accordion.isOpen(accordionId, @js($value)) || (@js($initiallyOpen) && ! Object.hasOwn($store.accordion.groups[accordionId]?.open ?? {}, @js($value)))">
     <div @class([$innerClass, $class])>
         {{ $slot }}
     </div>

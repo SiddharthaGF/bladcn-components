@@ -11,15 +11,15 @@
 @php
     $transition = filter_var($transition, FILTER_VALIDATE_BOOLEAN);
 
-    $overlayClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $overlayClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'fixed inset-0 z-50 bg-black/50',
     );
 
-    $contentClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $contentClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border bg-background p-6 shadow-lg outline-none sm:max-w-lg',
     );
 
-    $closeClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $closeClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=\'size-\'])]:size-4',
     );
 @endphp

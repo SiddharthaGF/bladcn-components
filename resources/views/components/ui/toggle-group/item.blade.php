@@ -13,7 +13,7 @@
     $resolvedVariant = $variant;
     $resolvedSize = $size;
 
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())
         ->add(
             'inline-flex w-auto min-w-0 shrink-0 items-center justify-center gap-2 rounded-md px-3 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] outline-none hover:bg-muted hover:text-muted-foreground focus-visible:z-10 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-accent data-[state=on]:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=\'size-\'])]:size-4',
         )

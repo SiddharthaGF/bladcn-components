@@ -14,11 +14,11 @@
     $percent = ($value / $max) * 100;
     $translateX = 100 - $percent;
 
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'relative h-2 w-full overflow-hidden rounded-full bg-primary/20',
     );
 
-    $indicatorClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $indicatorClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'h-full w-full flex-1 bg-primary transition-all',
     );
 

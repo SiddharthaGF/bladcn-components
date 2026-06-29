@@ -6,19 +6,19 @@
 ])
 
 @php
-    $dialogOverlayClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $dialogOverlayClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'fixed inset-0 z-50 bg-black/50 backdrop-blur-md',
     );
 
-    $drawerOverlayClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $drawerOverlayClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'fixed inset-0 z-50 bg-black/50 backdrop-blur-md transition-opacity ease-in-out data-[state=open]:opacity-100 data-[state=open]:duration-500 data-[state=closed]:opacity-0 data-[state=closed]:duration-300',
     );
 
-    $dialogContentClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $dialogContentClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'fixed top-[50%] left-[50%] z-[51] grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 rounded-lg border bg-background p-6 shadow-lg outline-none sm:max-w-lg',
     );
 
-    $drawerContentClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $drawerContentClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'group/drawer-content fixed inset-x-0 bottom-0 z-[51] flex h-auto max-h-[80vh] flex-col overflow-hidden rounded-t-lg border-t bg-background transition ease-in-out data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=closed]:slide-out-to-bottom data-[state=open]:animate-in data-[state=open]:duration-500 data-[state=open]:slide-in-from-bottom',
     );
 @endphp

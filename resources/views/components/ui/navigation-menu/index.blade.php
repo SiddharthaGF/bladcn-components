@@ -8,7 +8,7 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'group/navigation-menu relative flex max-w-max flex-1 items-center justify-center',
     );
 

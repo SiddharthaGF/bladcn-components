@@ -2,7 +2,7 @@
 
 [shadcn/ui](https://ui.shadcn.com) components ported to **Blade + Alpine.js** for Laravel.
 
-This repository is the **single source of truth** for CSS, JavaScript, and Blade views used by the [`bladcn`](https://github.com/SiddharthaGF/bladcn-cli) CLI. Install only the pieces you need into your Laravel app — the same copy-and-own workflow as shadcn/ui, but for the Laravel stack.
+This repository is the **single source of truth** for CSS, JavaScript, and Blade views used by the [`bladcn`](https://github.com/ailuracode/bladcn-cli) CLI. Install only the pieces you need into your Laravel app — the same copy-and-own workflow as shadcn/ui, but for the Laravel stack.
 
 ## Features
 
@@ -51,7 +51,7 @@ The default registry for `ailuracode/bladcn` is `../bladcn-components`.
 ### 1. Clone the registry
 
 ```bash
-git clone https://github.com/SiddharthaGF/bladcn-components.git
+git clone https://github.com/ailuracode/bladcn-components.git
 cd your-laravel-app
 ```
 

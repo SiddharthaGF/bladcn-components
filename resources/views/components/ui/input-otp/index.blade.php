@@ -12,7 +12,7 @@
 ])
 
 @php
-    $containerClassResolver = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $containerClassResolver = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'flex items-center gap-2 has-disabled:opacity-50',
     );
 

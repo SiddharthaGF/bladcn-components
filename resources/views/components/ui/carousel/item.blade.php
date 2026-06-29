@@ -10,7 +10,7 @@
 @php
     $userClass = trim((string) ($class ?? ''));
 
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'min-w-0 box-border shrink-0 grow-0',
     );
 

@@ -7,7 +7,7 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())
         ->add(
             'group/input-group relative flex w-full items-center rounded-md border border-input shadow-xs transition-[color,box-shadow] outline-none dark:bg-input/30',
         )

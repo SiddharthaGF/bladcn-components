@@ -13,7 +13,7 @@
 @php
     $transition = filter_var($transition, FILTER_VALIDATE_BOOLEAN);
 
-    $contentClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $contentClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'flex min-w-[8rem] flex-col overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md',
     );
 
@@ -23,7 +23,7 @@
         );
     }
 
-    $viewportClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $viewportClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'relative overflow-x-hidden overflow-y-auto p-1 [scrollbar-width:none] [-ms-overflow-style:none] [-webkit-overflow-scrolling:touch] [&::-webkit-scrollbar]:hidden',
     );
 

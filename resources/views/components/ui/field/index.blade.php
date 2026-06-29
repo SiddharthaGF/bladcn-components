@@ -9,7 +9,7 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())
         ->add(
             'group/field flex w-full gap-3 data-[invalid=true]:text-destructive',
         )

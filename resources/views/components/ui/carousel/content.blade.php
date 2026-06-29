@@ -10,11 +10,11 @@
 @php
     $userClass = trim((string) ($class ?? ''));
 
-    $viewportClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $viewportClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'overflow-hidden outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1',
     );
 
-    $trackClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add('flex');
+    $trackClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add('flex');
 
     if ($orientation === 'vertical') {
         $trackClass->add('flex-col');

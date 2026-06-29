@@ -21,7 +21,7 @@
 
     $isHorizontal = $orientation === 'horizontal';
 
-    $rootClass = new \AiluraCode\Bladcn\Support\ClassResolver()
+    $rootClass = (new \AiluraCode\Bladcn\Support\ClassResolver())
         ->add(
             'relative flex min-w-0 touch-none select-none data-[disabled]:opacity-50',
         )
@@ -31,17 +31,17 @@
                 : 'w-auto flex-col items-center',
         );
 
-    $trackClass = new \AiluraCode\Bladcn\Support\ClassResolver()
+    $trackClass = (new \AiluraCode\Bladcn\Support\ClassResolver())
         ->add('relative shrink-0 overflow-hidden rounded-full bg-muted')
         ->add(
             $isHorizontal ? 'mx-2 h-1 w-full grow' : 'my-2 min-h-0 w-1 flex-1',
         );
 
-    $rangeClass = new \AiluraCode\Bladcn\Support\ClassResolver()
+    $rangeClass = (new \AiluraCode\Bladcn\Support\ClassResolver())
         ->add('absolute bg-primary')
         ->add($isHorizontal ? 'top-0 h-full' : 'left-0 w-full');
 
-    $thumbClass = new \AiluraCode\Bladcn\Support\ClassResolver()
+    $thumbClass = (new \AiluraCode\Bladcn\Support\ClassResolver())
         ->add(
             'absolute z-10 block size-3 shrink-0 rounded-full border border-muted-foreground bg-primary shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:ring-4 focus-visible:outline-hidden active:cursor-grabbing disabled:pointer-events-none disabled:opacity-50',
         )

@@ -12,7 +12,7 @@
 ])
 
 @php
-    $boxClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $boxClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'pointer-events-none col-start-1 row-start-1 size-4 shrink-0 rounded-[4px] border border-input shadow-xs transition-shadow outline-none peer-focus-visible:border-ring peer-focus-visible:ring-[3px] peer-focus-visible:ring-ring/50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 peer-aria-invalid:border-destructive peer-aria-invalid:ring-destructive/20 peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground peer-checked:[&_svg]:opacity-100 dark:bg-input/30 dark:peer-aria-invalid:ring-destructive/40 dark:peer-checked:bg-primary',
     );
 

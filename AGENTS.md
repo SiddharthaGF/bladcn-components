@@ -6,7 +6,7 @@ Guide for AI agents working on **bladcn-components**.
 
 Official registry of [shadcn/ui](https://ui.shadcn.com) components ported to **Blade + Alpine.js** for Laravel. Single source of truth for **CSS, JS, and Blade views** consumed by the `bladcn` CLI.
 
-- **Repo:** https://github.com/SiddharthaGF/bladcn-components
+- **Repo:** https://github.com/ailuracode/bladcn-components
 - **Composer package (runtime):** `ailuracode/bladcn` (`src/`)
 - **npm package (tooling):** `@ailuracode/bladcn-components` (Prettier only)
 

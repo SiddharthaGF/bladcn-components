@@ -8,11 +8,11 @@
 ])
 
 @php
-    $overlayClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $overlayClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'fixed inset-0 z-50 bg-black/50 transition-opacity ease-in-out data-[state=open]:opacity-100 data-[state=open]:duration-500 data-[state=closed]:opacity-0 data-[state=closed]:duration-300',
     );
 
-    $contentClass = new \AiluraCode\Bladcn\Support\ClassResolver()
+    $contentClass = (new \AiluraCode\Bladcn\Support\ClassResolver())
         ->add(
             'fixed z-50 flex flex-col gap-4 bg-background shadow-lg transition ease-in-out data-[state=closed]:animate-out data-[state=closed]:duration-300 data-[state=open]:animate-in data-[state=open]:duration-500',
         )
@@ -29,7 +29,7 @@
             },
         );
 
-    $closeClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $closeClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none data-[state=open]:bg-secondary [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=\'size-\'])]:size-4',
     );
 @endphp

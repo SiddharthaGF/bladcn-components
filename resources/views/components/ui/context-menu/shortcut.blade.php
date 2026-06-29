@@ -6,7 +6,7 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'ml-auto text-xs tracking-widest text-muted-foreground group-focus/dropdown-menu-item:text-accent-foreground group-hover/dropdown-menu-item:text-accent-foreground group-focus/context-menu-item:text-accent-foreground group-hover/context-menu-item:text-accent-foreground',
     );
 

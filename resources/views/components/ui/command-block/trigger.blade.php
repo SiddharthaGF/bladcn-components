@@ -10,7 +10,7 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())
         ->add(
             'inline-flex h-7 items-center rounded-md border border-transparent px-2.5 text-xs font-medium transition-colors',
         )

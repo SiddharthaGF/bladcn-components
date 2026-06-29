@@ -7,7 +7,7 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())
         ->add('flex touch-none p-px transition-colors select-none')
         ->add(
             $orientation === 'horizontal'

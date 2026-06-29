@@ -9,7 +9,7 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'divide-y divide-zinc-800 overflow-hidden rounded-lg border border-zinc-800',
     );
 

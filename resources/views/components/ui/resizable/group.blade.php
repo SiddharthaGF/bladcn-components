@@ -9,7 +9,7 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())
         ->add('group/resizable-panel-group flex h-full w-full')
         ->add($orientation === 'vertical' ? 'flex-col' : 'flex-row');
 

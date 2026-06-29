@@ -13,7 +13,7 @@
 @php
     $transition = filter_var($transition, FILTER_VALIDATE_BOOLEAN);
 
-    $positionClass = new \AiluraCode\Bladcn\Support\ClassResolver()
+    $positionClass = (new \AiluraCode\Bladcn\Support\ClassResolver())
         ->add('absolute z-50 pointer-events-none')
         ->add(
             match ($side) {
@@ -52,7 +52,7 @@
         default => 'opacity-0 scale-95 translate-y-1',
     };
 
-    $surfaceClass = new \AiluraCode\Bladcn\Support\ClassResolver()
+    $surfaceClass = (new \AiluraCode\Bladcn\Support\ClassResolver())
         ->add(
             'pointer-events-auto relative w-fit max-w-sm rounded-md bg-foreground px-3 py-1.5 text-xs whitespace-nowrap text-background',
         )

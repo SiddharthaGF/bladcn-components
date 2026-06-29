@@ -16,7 +16,7 @@
         "indentInnerHtml": true,
         "trailingCommaPHP": true,
         "componentPrefix": "x-,livewire:",
-        "phpVersion": "8.4"
+        "phpVersion": "8.2"
       }
     }
   ]

@@ -11,7 +11,7 @@
 @php
     $content = $message ?? (is_string($error) ? $error : null);
 
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'text-sm font-medium text-destructive',
     );
 

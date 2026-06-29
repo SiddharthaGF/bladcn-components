@@ -8,7 +8,7 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'flex flex-col gap-6 rounded-xl border bg-card py-6 text-card-foreground shadow-sm',
     );
 

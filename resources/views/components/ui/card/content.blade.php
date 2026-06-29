@@ -7,7 +7,9 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add('px-6');
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
+        'px-6',
+    );
 
     $presetAttributes = [
         'id' => $id,

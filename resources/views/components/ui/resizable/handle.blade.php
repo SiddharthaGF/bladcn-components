@@ -8,7 +8,7 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'relative flex w-px shrink-0 cursor-col-resize items-center justify-center bg-border after:absolute after:inset-y-0 after:left-1/2 after:w-1 after:-translate-x-1/2 focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:outline-hidden group-data-[orientation=vertical]/resizable-panel-group:h-px group-data-[orientation=vertical]/resizable-panel-group:w-full group-data-[orientation=vertical]/resizable-panel-group:cursor-row-resize group-data-[orientation=vertical]/resizable-panel-group:after:left-0 group-data-[orientation=vertical]/resizable-panel-group:after:h-1 group-data-[orientation=vertical]/resizable-panel-group:after:w-full group-data-[orientation=vertical]/resizable-panel-group:after:translate-x-0 group-data-[orientation=vertical]/resizable-panel-group:after:-translate-y-1/2',
     );
 

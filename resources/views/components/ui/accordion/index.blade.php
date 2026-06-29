@@ -2,6 +2,7 @@
 {{-- @see https://ui.shadcn.com/docs/components/accordion --}}
 
 @props([
+    'id' => null,
     'type' => 'single',
     'collapsible' => false,
     'defaultValue' => null,
@@ -11,6 +12,9 @@
 ])
 
 @php
+    $accordionId = filled($id)
+        ? $id
+        : 'accordion-' . Illuminate\Support\Str::random(8);
     $transition = filter_var($transition, FILTER_VALIDATE_BOOLEAN);
 
     $defaultOpen = match (true) {
@@ -20,6 +24,7 @@
     };
 
     $presetAttributes = [
+        'id' => $accordionId,
         'data-slot' => 'accordion',
     ];
 
@@ -28,65 +33,50 @@
     }
 @endphp
 
-<div {{ $attributes->merge($presetAttributes)->class($class) }}
-    x-data="bladcnAccordion({
+<div @keydown="$store.accordion.handleKeydown(@js($accordionId), $event)"
+    {{ $attributes->merge($presetAttributes)->class($class) }}
+    x-data="bladcnAccordionRoot({
+        accordionId: @js($accordionId),
         type: @js($type),
         collapsible: @js($collapsible),
-        defaultValue: @js($defaultOpen),
+        defaultOpen: @js($defaultOpen),
     })">
     {{ $slot }}
 </div>
 @pushOnce('bladcn-scripts')
     <script>
         bladcnOnAlpine((Alpine) => {
-            Alpine.data('bladcnAccordion', (config = {}) => ({
+            Alpine.data('bladcnAccordionRoot', (config = {}) => ({
+                accordionId: config.accordionId,
                 type: config.type ?? 'single',
                 collapsible: config.collapsible ?? false,
-                openItems: normalizeOpenItems(config
-                    .defaultValue),
+                defaultOpen: config.defaultOpen ?? [],
 
-                toggle(value) {
-                    if (this.type === 'multiple') {
-                        if (this.openItems.includes(value)) {
-                            this.openItems = this.openItems
-                                .filter(
-                                    (item) => item !== value,
-                                );
-                        } else {
-                            this.openItems = [...this.openItems,
-                                value
-                            ];
-                        }
-
-                        return;
-                    }
-
-                    if (this.openItems.includes(value)) {
-                        this.openItems = this.collapsible ? [] :
-                            this.openItems;
-
-                        return;
-                    }
-
-                    this.openItems = [value];
+                init() {
+                    this.$store.accordion.register(this
+                        .accordionId, {
+                            mode: this.type,
+                            defaultOpen: this.defaultOpen,
+                        });
                 },
 
-                isOpen(value) {
-                    return this.openItems.includes(value);
+                toggle(value) {
+                    const store = this.$store.accordion;
+
+                    if (store.isOpen(this.accordionId, value)) {
+                        if (this.type === 'single' && !this
+                            .collapsible) {
+                            return;
+                        }
+
+                        store.close(this.accordionId, value);
+
+                        return;
+                    }
+
+                    store.open(this.accordionId, value);
                 },
             }));
         });
-
-        function normalizeOpenItems(defaultValue) {
-            if (Array.isArray(defaultValue)) {
-                return defaultValue;
-            }
-
-            if (defaultValue) {
-                return [defaultValue];
-            }
-
-            return [];
-        }
     </script>
 @endPushOnce

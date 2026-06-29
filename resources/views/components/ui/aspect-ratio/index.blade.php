@@ -16,7 +16,7 @@
     $ratioWidth = max(1, (float) $ratioWidth);
     $ratioHeight = max(1, (float) $ratioHeight);
 
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'relative w-full',
     );
 

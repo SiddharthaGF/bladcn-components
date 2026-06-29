@@ -13,7 +13,7 @@
 ])
 
 @php
-    $controlClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $controlClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'pointer-events-none col-start-1 row-start-1 aspect-square size-4 shrink-0 rounded-full border border-input text-primary shadow-xs transition-[color,box-shadow] outline-none peer-focus-visible:border-ring peer-focus-visible:ring-[3px] peer-focus-visible:ring-ring/50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 peer-aria-invalid:border-destructive peer-aria-invalid:ring-destructive/20 dark:bg-input/30 dark:peer-aria-invalid:ring-destructive/40 peer-checked:[&_[data-slot=radio-group-indicator]]:opacity-100',
     );
 

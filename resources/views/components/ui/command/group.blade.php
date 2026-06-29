@@ -7,11 +7,11 @@
 ])
 
 @php
-    $presetClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'overflow-hidden p-1 text-foreground',
     );
 
-    $headingClass = new \AiluraCode\Bladcn\Support\ClassResolver()->add(
+    $headingClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
         'text-muted-foreground px-2 py-1.5 text-xs font-medium',
     );
 
