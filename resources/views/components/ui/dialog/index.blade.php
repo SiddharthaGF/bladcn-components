@@ -32,14 +32,12 @@
 
                 open() {
                     this.isOpen = true;
-                    document.body.classList.add(
-                        'overflow-hidden');
+                    this.$store.scroll.lock();
                 },
 
                 close() {
                     this.isOpen = false;
-                    document.body.classList.remove(
-                        'overflow-hidden');
+                    this.$store.scroll.unlock();
                 },
             }));
         });

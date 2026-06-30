@@ -1,8 +1,6 @@
 @blaze(fold: false)
 {{-- @see https://ui.shadcn.com/docs/components/drawer --}}
 
-<x-ui.body-scroll-lock />
-
 @props([
     'open' => false,
     'breakpoint' => 768,
@@ -63,7 +61,7 @@
                     this.isClosing = false;
                     this.isOpen = true;
                     this.isPresent = true;
-                    window.bladcnBodyScrollLock?.lock();
+                    this.$store.scroll.lock();
 
                     if (!this.isDesktop) {
                         this.animationState = 'closed';
@@ -91,7 +89,7 @@
                     if (this.isDesktop) {
                         this.isOpen = false;
                         this.isPresent = false;
-                        window.bladcnBodyScrollLock?.unlock();
+                        this.$store.scroll.unlock();
 
                         return;
                     }
@@ -103,8 +101,7 @@
                     this.closeTimer = setTimeout(() => {
                         this.isPresent = false;
                         this.isClosing = false;
-                        window.bladcnBodyScrollLock
-                            ?.unlock();
+                        this.$store.scroll.unlock();
                     }, DRAWER_CLOSE_DURATION);
                 },
             }));

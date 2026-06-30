@@ -100,7 +100,7 @@
             }
 
             // Host apps must register @ailuracode/alpine-sidebar only — do not
-            // also register bladcnSidebarProvider in app.js (scroll lock lives here).
+            // also register bladcnSidebarProvider in app.js.
             Alpine.data('bladcnSidebarProvider', () => ({
                 expanded: readExpanded(),
                 mobilePresent: false,
@@ -159,8 +159,7 @@
                                 this.$store.sidebar.hide();
                             }
 
-                            window.bladcnBodyScrollLock
-                                ?.unlock();
+                            this.$store.scroll.unlock();
                         },
                     );
 
@@ -181,7 +180,7 @@
                     this.mobileClosing = false;
                     this.mobilePresent = true;
                     this.mobileAnimationState = 'closed';
-                    window.bladcnBodyScrollLock?.lock();
+                    this.$store.scroll.lock();
 
                     this.$nextTick(() => {
                         requestAnimationFrame(() => {
@@ -220,8 +219,7 @@
                         document.documentElement
                             .removeAttribute(
                                 'data-sidebar');
-                        window.bladcnBodyScrollLock
-                            ?.unlock();
+                        this.$store.scroll.unlock();
                     }, SIDEBAR_MOBILE_CLOSE_MS);
                 },
 

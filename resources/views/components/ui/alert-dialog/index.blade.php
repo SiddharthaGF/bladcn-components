@@ -1,8 +1,6 @@
 @blaze(fold: false)
 {{-- @see https://ui.shadcn.com/docs/components/alert-dialog --}}
 
-<x-ui.body-scroll-lock />
-
 @props([
     'open' => false,
     'style' => null,
@@ -43,7 +41,7 @@
                     this.isOpen = true;
                     this.isPresent = true;
                     this.animationState = 'closed';
-                    window.bladcnBodyScrollLock?.lock();
+                    this.$store.scroll.lock();
 
                     this.$nextTick(() => {
                         requestAnimationFrame(() => {
@@ -69,8 +67,7 @@
                     this.closeTimer = setTimeout(() => {
                         this.isPresent = false;
                         this.isClosing = false;
-                        window.bladcnBodyScrollLock
-                            ?.unlock();
+                        this.$store.scroll.unlock();
                     }, ALERT_DIALOG_CLOSE_DURATION);
                 },
             }));

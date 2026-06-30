@@ -1,8 +1,6 @@
 @blaze(fold: false)
 {{-- @see https://ui.shadcn.com/docs/components/context-menu --}}
 
-<x-ui.body-scroll-lock />
-
 @props([
     'defaultRadioValue' => null,
     'checkboxes' => [],
@@ -49,7 +47,7 @@
 
                 openAt(event) {
                     event.preventDefault();
-                    window.bladcnBodyScrollLock?.lock();
+                    this.$store.scroll.lock();
                     this.anchorX = event.clientX;
                     this.anchorY = event.clientY;
                     this.isOpen = true;
@@ -77,7 +75,7 @@
                     this.portalStyle = '';
                     this.resolvedSide = 'bottom';
                     this.closeAllSubs();
-                    window.bladcnBodyScrollLock?.unlock();
+                    this.$store.scroll.unlock();
                 },
 
                 closeIfOutside(event) {

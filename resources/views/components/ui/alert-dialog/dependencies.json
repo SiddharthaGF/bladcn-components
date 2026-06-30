@@ -1,3 +1,4 @@
 {
-  "dependencies": ["abstract", "body-scroll-lock", "button"]
+  "dependencies": ["abstract", "button"],
+  "npm": ["@ailuracode/alpine-scroll"]
 }
