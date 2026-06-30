@@ -11,7 +11,7 @@
     size="icon"
     type="button"
     variant="ghost"
-    x-on:click="$store.bladcnSidebar.toggle()">
+    x-on:click="$store.sidebar.matchesBreakpoint ? toggleExpanded() : $store.sidebar.toggle()">
     <x-ui.icon aria-hidden="true"
         class="size-4"
         name="panel-left" />

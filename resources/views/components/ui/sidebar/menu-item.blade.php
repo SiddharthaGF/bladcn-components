@@ -17,6 +17,6 @@
 @endphp
 
 <li
-    {{ $attributes->merge($presetAttributes)->class(['group/menu-item relative', $class]) }}>
+    {{ $attributes->merge($presetAttributes)->class(['group/menu-item relative flex w-full', $class]) }}>
     {{ $slot }}
 </li>

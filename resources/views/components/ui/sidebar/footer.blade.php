@@ -7,7 +7,7 @@
 
 @php
     $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
-        'flex flex-col gap-2 p-2',
+        'flex min-w-0 flex-col gap-2 overflow-x-hidden p-2',
     );
 
     $presetAttributes = [

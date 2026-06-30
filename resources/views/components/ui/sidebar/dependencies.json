@@ -1,3 +1,4 @@
 {
-  "dependencies": ["abstract", "button", "icon"]
+  "dependencies": ["abstract", "button", "icon"],
+  "npm": ["@ailuracode/alpine-sidebar"]
 }
