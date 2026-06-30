@@ -1,8 +1,6 @@
 @blaze(fold: false)
 {{-- @see https://ui.shadcn.com/docs/components/select --}}
 
-<x-ui.body-scroll-lock />
-
 @props([
     'name' => null,
     'defaultValue' => null,
@@ -87,7 +85,7 @@
                 },
 
                 open() {
-                    window.bladcnBodyScrollLock?.lock();
+                    this.$store.scroll.lock();
                     this.isPositioned = this.contentPosition !==
                         'item-aligned';
 
@@ -132,7 +130,7 @@
                     this.needsContentScroll = false;
                     this.shouldRepositionForScrollButtons =
                         true;
-                    window.bladcnBodyScrollLock?.unlock();
+                    this.$store.scroll.unlock();
                 },
 
                 updateScrollButtons() {

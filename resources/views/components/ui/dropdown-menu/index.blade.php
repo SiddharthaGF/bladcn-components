@@ -1,8 +1,6 @@
 @blaze(fold: false)
 {{-- @see https://ui.shadcn.com/docs/components/dropdown-menu --}}
 
-<x-ui.body-scroll-lock />
-
 @props([
     'open' => false,
     'defaultRadioValue' => null,
@@ -69,7 +67,7 @@
                 },
 
                 open(event) {
-                    window.bladcnBodyScrollLock?.lock();
+                    this.$store.scroll.lock();
                     this.isOpen = true;
 
                     this.$nextTick(() => {
@@ -92,7 +90,7 @@
                     this.isOpen = false;
                     this.portalStyle = '';
                     this.closeAllSubs();
-                    window.bladcnBodyScrollLock?.unlock();
+                    this.$store.scroll.unlock();
                 },
 
                 closeIfOutside(event) {
