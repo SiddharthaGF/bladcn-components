@@ -1,7 +1,9 @@
 @blaze(fold: false)
 {{-- @see https://ui.shadcn.com/docs/components/dropdown-menu --}}
+{{-- @see https://github.com/ailuracode/alpinejs-toolkit/blob/master/docs/plugins/menu.md --}}
 
 @props([
+    'id' => null,
     'open' => false,
     'defaultRadioValue' => null,
     'checkboxes' => [],
@@ -17,376 +19,356 @@
     if (filled($style)) {
         $presetAttributes['style'] = $style;
     }
+
+    $isOpen = filter_var($open, FILTER_VALIDATE_BOOLEAN);
 @endphp
 
 <div {{ $attributes->merge($presetAttributes)->class(['relative inline-block', $class]) }}
-    x-bind:data-state="isOpen ? 'open' : 'closed'"
+    x-bind:data-state="panelOpen ? 'open' : 'closed'"
     x-data="bladcnDropdownMenu({
-        open: @js($open),
-        radioValue: @js($defaultRadioValue),
+        id: @js(filled($id) ? $id : null),
+        open: @js($isOpen),
         checkboxes: @js($checkboxes),
+        radioValue: @js($defaultRadioValue),
     })"
-    x-on:keydown.escape.window="close()">
+    x-id="['dropdown-menu']"
+    x-on:click.outside="close()"
+    x-on:keydown.window="handleKeydown($event)">
     {{ $slot }}
 </div>
 
 @pushOnce('bladcn-scripts')
     <script>
         bladcnOnAlpine((Alpine) => {
-            const VIEWPORT_MARGIN = 8;
-
-            const clamp = (value, min, max) => Math.min(Math.max(value,
-                min), max);
-
             Alpine.data('bladcnDropdownMenu', (config = {}) => ({
-                isOpen: config.open ?? false,
+                initId: config.id ?? null,
+                initialOpen: Boolean(config.open),
+                panelOpen: false,
+                keyboardNav: false,
+                highlightedItemId: null,
                 checkboxes: config.checkboxes ?? {},
                 radioValue: config.radioValue ?? null,
-                contentAlign: 'start',
-                contentSide: 'bottom',
-                contentSideOffset: 4,
-                resolvedSide: 'bottom',
-                portalStyle: '',
+                _onMenuOpen: null,
+                _onMenuClose: null,
+                _onMenuActive: null,
 
-                registerContent(options) {
-                    this.contentAlign = options.align ??
-                        'start';
-                    this.contentSide = options.side ?? 'bottom';
-                    this.contentSideOffset = options
-                        .sideOffset ?? 4;
+                get id() {
+                    return this.initId ?? this.$id(
+                        'dropdown-menu');
                 },
 
-                toggle(event) {
-                    if (this.isOpen) {
+                init() {
+                    const id = this.id;
+
+                    bladcnRegisterMenu(id, {
+                        orientation: 'vertical',
+                        onClose: () => {
+                            this.$root
+                                .querySelectorAll(
+                                    '[data-slot=dropdown-menu-sub]'
+                                )
+                                .forEach((
+                                    element
+                                ) => {
+                                    Alpine
+                                        .$data(
+                                            element
+                                        )
+                                        ?.closeSub
+                                        ?.();
+                                });
+                        },
+                    });
+
+                    this._onMenuOpen = (event) => {
+                        if (event.detail?.id === id) {
+                            this.panelOpen = true;
+                        }
+                    };
+
+                    this._onMenuClose = (event) => {
+                        if (event.detail?.id === id) {
+                            this.panelOpen = false;
+                            this.keyboardNav = false;
+                            this.highlightedItemId = null;
+                        }
+                    };
+
+                    this._onMenuActive = (event) => {
+                        if (event.detail?.id === id) {
+                            this.highlightedItemId = event
+                                .detail.activeItemId ??
+                                null;
+                        }
+                    };
+
+                    document.addEventListener(
+                        'bladcn:menu-open', this._onMenuOpen
+                    );
+                    document.addEventListener(
+                        'bladcn:menu-close', this
+                        ._onMenuClose);
+                    document.addEventListener(
+                        'bladcn:menu-active', this
+                        ._onMenuActive);
+
+                    if (this.initialOpen) {
+                        this.$store.menu.open(id);
+                    }
+                },
+
+                destroy() {
+                    document.removeEventListener(
+                        'bladcn:menu-open', this._onMenuOpen
+                    );
+                    document.removeEventListener(
+                        'bladcn:menu-close', this
+                        ._onMenuClose);
+                    document.removeEventListener(
+                        'bladcn:menu-active', this
+                        ._onMenuActive);
+                    this.$store.menu.unregister(this.id);
+                },
+
+                toggleMenu() {
+                    if (this.panelOpen) {
                         this.close();
 
                         return;
                     }
 
-                    this.open(event);
-                },
-
-                open(event) {
-                    this.$store.scroll.lock();
-                    this.isOpen = true;
-
-                    this.$nextTick(() => {
-                        requestAnimationFrame(() => {
-                            this.applyPosition(
-                                event);
-                            requestAnimationFrame
-                                (() => this
-                                    .applyPosition(
-                                        event));
-                        });
-                    });
+                    this.$store.menu.open(this.id);
                 },
 
                 close() {
-                    if (!this.isOpen) {
+                    this.$store.menu.close(this.id);
+                },
+
+                enableKeyboardNav() {
+                    this.keyboardNav = true;
+                },
+
+                disableKeyboardNav() {
+                    this.keyboardNav = false;
+                },
+
+                isMenuNavigationKey(key) {
+                    return [
+                        'ArrowUp',
+                        'ArrowDown',
+                        'ArrowLeft',
+                        'ArrowRight',
+                        'Home',
+                        'End',
+                        'Enter',
+                        ' ',
+                    ].includes(key);
+                },
+
+                getOpenSub() {
+                    for (const element of this.$root
+                            .querySelectorAll(
+                                '[data-slot="dropdown-menu-sub"]',
+                            )) {
+                        const sub = Alpine.$data(element);
+
+                        if (sub?.isSubOpen) {
+                            return sub;
+                        }
+                    }
+
+                    return null;
+                },
+
+                isDropdownItemHighlighted(itemId) {
+                    const openSub = this.getOpenSub();
+
+                    if (openSub) {
+                        return openSub.isSubItemHighlighted(
+                            itemId);
+                    }
+
+                    return this.getHighlightedItemId() ===
+                        itemId;
+                },
+
+                highlightItem(itemId, element = null) {
+                    this.disableKeyboardNav();
+
+                    const subRoot = element?.closest(
+                        '[data-slot="dropdown-menu-sub"]',
+                    );
+                    const sub = subRoot ? Alpine.$data(
+                        subRoot) : null;
+
+                    if (
+                        sub?.isSubOpen &&
+                        element?.closest(
+                            '[data-slot="dropdown-menu-sub-content"]',
+                        )
+                    ) {
+                        sub.subHighlightedItemId = itemId;
+
                         return;
                     }
 
-                    this.isOpen = false;
-                    this.portalStyle = '';
-                    this.closeAllSubs();
-                    this.$store.scroll.unlock();
+                    const openSub = this.getOpenSub();
+
+                    if (openSub) {
+                        const activeTriggerId =
+                            openSub.$refs.subTrigger
+                            ?.dataset.menuItemId ?? null;
+
+                        if (activeTriggerId !== itemId) {
+                            openSub.closeSub();
+                        }
+                    }
+
+                    this.highlightedItemId = itemId;
+                    this.$store.menu.setActiveItem(
+                        this.id, itemId);
                 },
 
-                closeIfOutside(event) {
-                    if (event.target.closest(
-                            '[data-slot="dropdown-menu-sub"]'
-                        )) {
+                getHighlightedItemId() {
+                    return (
+                        this.highlightedItemId ??
+                        this.$store.menu.activeItem(this.id)
+                    );
+                },
+
+                getHighlightedItemElement() {
+                    const activeId = this
+                        .getHighlightedItemId();
+
+                    if (!activeId) {
+                        return null;
+                    }
+
+                    return this.$root.querySelector(
+                        `[data-menu-item-id="${activeId}"]`,
+                    );
+                },
+
+                focusHighlightedItem() {
+                    const activeId = this
+                .getHighlightedItemId();
+
+                    this.$nextTick(() => {
+                        this.$root
+                            .querySelectorAll(
+                                '[data-menu-item-id]')
+                            .forEach((element) => {
+                                if (
+                                    element.dataset
+                                    .menuItemId !==
+                                    activeId
+                                ) {
+                                    element.blur();
+                                }
+                            });
+
+                        this.getHighlightedItemElement()
+                            ?.focus({
+                                preventScroll: true,
+                            });
+                    });
+                },
+
+                openActiveSubmenu(event) {
+                    const activeId = this
+                        .getHighlightedItemId();
+
+                    if (!activeId) {
+                        return false;
+                    }
+
+                    const subTrigger = this.$root.querySelector(
+                        `[data-menu-item-id="${activeId}"][data-slot="dropdown-menu-sub-trigger"]`,
+                    );
+
+                    if (!subTrigger) {
+                        return false;
+                    }
+
+                    const subRoot = subTrigger.closest(
+                        '[data-slot="dropdown-menu-sub"]',
+                    );
+                    const sub = subRoot ? Alpine.$data(
+                        subRoot) : null;
+
+                    if (!sub?.openSub) {
+                        return false;
+                    }
+
+                    event.preventDefault();
+
+                    sub.openSub(event);
+
+                    return true;
+                },
+
+                activateHighlightedSpecialItem(event) {
+                    const element = this
+                        .getHighlightedItemElement();
+
+                    if (!element) {
+                        return false;
+                    }
+
+                    const role = element.getAttribute('role');
+
+                    if (
+                        role !== 'menuitemcheckbox' &&
+                        role !== 'menuitemradio'
+                    ) {
+                        return false;
+                    }
+
+                    event.preventDefault();
+                    element.click();
+
+                    return true;
+                },
+
+                handleKeydown(event) {
+                    if (!this.panelOpen) {
                         return;
                     }
 
-                    this.close();
-                },
-
-                closeAllSubs() {
-                    this.$root
-                        .querySelectorAll(
-                            '[data-slot="dropdown-menu-sub"]')
-                        .forEach((element) => {
-                            Alpine.$data(element)?.closeSub
-                                ?.();
-                        });
-                },
-
-                measureContent(content, contentRect) {
-                    if (!content) {
-                        return contentRect;
+                    if (this.isMenuNavigationKey(event.key)) {
+                        this.enableKeyboardNav();
                     }
 
-                    const height = Math.max(
-                        content.scrollHeight,
-                        content.offsetHeight,
-                        contentRect.height,
-                    );
-                    const width = Math.max(
-                        content.scrollWidth,
-                        content.offsetWidth,
-                        contentRect.width,
-                    );
+                    const openSub = this.getOpenSub();
 
-                    return {
-                        width,
-                        height
-                    };
-                },
-
-                resolveContentSide(rect, contentRect, content) {
-                    const offset = this.contentSideOffset;
-                    const margin = VIEWPORT_MARGIN;
-                    const preferred = this.contentSide;
-                    const measured = this.measureContent(
-                        content, contentRect);
-
-                    if (preferred === 'bottom' || preferred ===
-                        'top') {
-                        if (measured.height <= 0) {
-                            return preferred;
-                        }
-
-                        const spaceBelow =
-                            window.innerHeight - margin - rect
-                            .bottom - offset;
-                        const spaceAbove = rect.top - margin -
-                            offset;
-                        const height = measured.height;
-
-                        if (preferred === 'bottom') {
-                            if (
-                                height > spaceBelow &&
-                                (height <= spaceAbove ||
-                                    spaceAbove > spaceBelow)
-                            ) {
-                                return 'top';
-                            }
-
-                            return 'bottom';
-                        }
-
-                        if (
-                            height > spaceAbove &&
-                            (height <= spaceBelow ||
-                                spaceBelow > spaceAbove)
-                        ) {
-                            return 'bottom';
-                        }
-
-                        return 'top';
-                    }
-
-                    if (preferred === 'left' || preferred ===
-                        'right') {
-                        if (measured.width <= 0) {
-                            return preferred;
-                        }
-
-                        const spaceRight =
-                            window.innerWidth - margin - rect
-                            .right - offset;
-                        const spaceLeft = rect.left - margin -
-                            offset;
-                        const width = measured.width;
-
-                        if (preferred === 'right') {
-                            if (
-                                width > spaceRight &&
-                                (width <= spaceLeft ||
-                                    spaceLeft > spaceRight)
-                            ) {
-                                return 'left';
-                            }
-
-                            return 'right';
-                        }
-
-                        if (
-                            width > spaceLeft &&
-                            (width <= spaceRight || spaceRight >
-                                spaceLeft)
-                        ) {
-                            return 'right';
-                        }
-
-                        return 'left';
-                    }
-
-                    return preferred;
-                },
-
-                applyPosition(event) {
-                    const trigger = this.$refs.trigger ?? event
-                        ?.currentTarget;
-                    const content = this.$refs.content;
-
-                    if (!trigger) {
+                    if (openSub?.handleKeydown(event)) {
                         return;
                     }
 
-                    const rect = trigger
-                        .getBoundingClientRect();
-                    const contentRect = content
-                        ?.getBoundingClientRect() ?? {
-                            width: 0,
-                            height: 0,
-                        };
-                    const margin = VIEWPORT_MARGIN;
-                    const offset = this.contentSideOffset;
-                    const availableHeight = window.innerHeight -
-                        margin * 2;
-                    const measured = this.measureContent(
-                        content, contentRect);
-                    const side = this.resolveContentSide(
-                        rect,
-                        contentRect,
-                        content,
-                    );
-
-                    this.resolvedSide = side;
-
-                    let top = 0;
-                    let left = 0;
-                    let transform = '';
-                    let maxHeight = availableHeight;
-
-                    if (side === 'bottom' || side === 'top') {
-                        const spaceBelow =
-                            window.innerHeight - margin - rect
-                            .bottom - offset;
-                        const spaceAbove = rect.top - margin -
-                            offset;
-
-                        if (side === 'bottom') {
-                            maxHeight = Math.min(
-                                availableHeight,
-                                Math.max(0, spaceBelow),
-                            );
-                            top = rect.bottom + offset;
-                        } else {
-                            maxHeight = Math.min(
-                                availableHeight,
-                                Math.max(0, spaceAbove),
-                            );
-                            const placedHeight =
-                                measured.height > 0 ?
-                                Math.min(measured.height,
-                                    maxHeight) :
-                                0;
-                            top = rect.top - offset -
-                                placedHeight;
-                            top = Math.max(margin, top);
-                        }
-
-                        ({
-                            left,
-                            transform
-                        } = this.horizontalAlign(rect));
-                    } else {
-                        const spaceRight =
-                            window.innerWidth - margin - rect
-                            .right - offset;
-                        const spaceLeft = rect.left - margin -
-                            offset;
-
-                        switch (side) {
-                            case 'left':
-                                left =
-                                    rect.left -
-                                    offset -
-                                    Math.min(
-                                        measured.width,
-                                        Math.max(0, spaceLeft),
-                                    );
-                                break;
-                            default:
-                                left = rect.right + offset;
-                        }
-
-                        ({
-                            top,
-                            transform
-                        } = this.verticalAlign(rect));
-
-                        if (measured.width > 0) {
-                            left = clamp(
-                                left,
-                                margin,
-                                Math.max(
-                                    margin,
-                                    window.innerWidth -
-                                    margin -
-                                    measured.width,
-                                ),
-                            );
+                    if (
+                        event.key === 'Enter' ||
+                        event.key === ' ' ||
+                        event.key === 'ArrowRight'
+                    ) {
+                        if (this.openActiveSubmenu(event)) {
+                            return;
                         }
                     }
 
                     if (
-                        (side === 'bottom' || side === 'top') &&
-                        measured.width > 0
+                        (event.key === 'Enter' || event.key ===
+                            ' ') &&
+                        this.activateHighlightedSpecialItem(
+                            event)
                     ) {
-                        left = clamp(
-                            left,
-                            margin,
-                            Math.max(
-                                margin,
-                                window.innerWidth - margin -
-                                measured.width,
-                            ),
-                        );
+                        return;
                     }
 
-                    this.portalStyle = [
-                            `left: ${left}px`,
-                            `top: ${top}px`,
-                            `max-height: ${maxHeight}px`,
-                            transform,
-                        ]
-                        .filter(Boolean)
-                        .join('; ');
-                },
-
-                horizontalAlign(rect) {
-                    let left = rect.left;
-                    let transform = '';
-
-                    if (this.contentAlign === 'center') {
-                        left = rect.left + rect.width / 2;
-                        transform =
-                            'transform: translateX(-50%);';
-                    } else if (this.contentAlign === 'end') {
-                        left = rect.right;
-                        transform =
-                            'transform: translateX(-100%);';
-                    }
-
-                    return {
-                        left,
-                        transform
-                    };
-                },
-
-                verticalAlign(rect) {
-                    let top = rect.top;
-                    let transform = '';
-
-                    if (this.contentAlign === 'center') {
-                        top = rect.top + rect.height / 2;
-                        transform =
-                            'transform: translateY(-50%);';
-                    } else if (this.contentAlign === 'end') {
-                        top = rect.bottom;
-                        transform =
-                            'transform: translateY(-100%);';
-                    }
-
-                    return {
-                        top,
-                        transform
-                    };
+                    this.$store.menu.handleKeydown(this.id,
+                        event);
+                    this.highlightedItemId =
+                        this.$store.menu.activeItem(this.id);
+                    this.focusHighlightedItem();
                 },
 
                 toggleCheckbox(key) {

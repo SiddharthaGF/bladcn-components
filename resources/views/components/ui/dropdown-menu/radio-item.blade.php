@@ -9,15 +9,14 @@
 
 @php
     $presetClass = (new \AiluraCode\Bladcn\Support\ClassResolver())->add(
-        'relative flex w-full cursor-default items-center gap-1.5 rounded-md py-1 pr-2 pl-8 text-sm outline-hidden select-none focus:bg-accent focus:text-accent-foreground hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset]:pl-8 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=\'size-\'])]:size-4 [&_[data-slot=dropdown-menu-radio-item-indicator]_[data-slot=radio-group-indicator]_svg]:size-2 [&_[data-slot=context-menu-radio-item-indicator]_[data-slot=radio-group-indicator]_svg]:size-2',
+        'group/dropdown-menu-item relative flex w-full cursor-default items-center gap-1.5 rounded-md py-1 pr-2 pl-8 text-sm outline-hidden select-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*=\'size-\'])]:size-4 [&_[data-slot=dropdown-menu-radio-item-indicator]_[data-slot=radio-group-indicator]_svg]:size-2',
     );
 
     $presetAttributes = [
+        'type' => 'button',
         'role' => 'menuitemradio',
         'data-slot' => 'dropdown-menu-radio-item',
         'data-value' => $value,
-        'data-disabled' => $disabled ? '' : null,
-        'tabindex' => '-1',
     ];
 
     if (filled($style)) {
@@ -25,11 +24,23 @@
     }
 @endphp
 
-<div {{ $attributes->merge($presetAttributes)->class([$presetClass, $class]) }}
+<button
+    {{ $attributes->merge($presetAttributes)->class([$presetClass, $class]) }}
     @unless ($disabled)
-        x-on:click.stop="selectRadio(@js($value)); close()"
+        x-on:click.stop="selectRadio(@js($value))"
     @endunless
-    x-bind:aria-checked="isRadioSelected(@js($value))">
+    @disabled($disabled)
+    x-bind:aria-checked="isRadioSelected(@js($value))"
+    x-bind:aria-disabled="@js($disabled)"
+    x-bind:class="isDropdownItemHighlighted($id('dropdown-menu-radio-item')) ?
+        'bg-accent text-accent-foreground' : ''"
+    x-bind:data-menu-item-id="$id('dropdown-menu-radio-item')"
+    x-bind:tabindex="isDropdownItemHighlighted($id('dropdown-menu-radio-item')) ? 0 : -1"
+    x-id="['dropdown-menu-radio-item']"
+    x-init="if (!$el.closest('[data-slot=dropdown-menu-sub-content]')) {
+        $store.menu.registerItem(id, $id('dropdown-menu-radio-item'), { disabled: @js($disabled) });
+    }"
+    x-on:mouseenter="highlightItem($id('dropdown-menu-radio-item'), $el)">
     <span
         class="pointer-events-none absolute left-2 flex items-center justify-center"
         data-slot="dropdown-menu-radio-item-indicator">
@@ -39,11 +50,11 @@
                 data-slot="radio-group-indicator">
                 <span x-show="isRadioSelected(@js($value))">
                     <x-ui.icon aria-hidden="true"
-                        class="{{ 'absolute top-1/2 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2 fill-primary' }}"
+                        class="fill-primary absolute left-1/2 top-1/2 size-2 -translate-x-1/2 -translate-y-1/2"
                         name="circle" />
                 </span>
             </span>
         </span>
     </span>
     {{ $slot }}
-</div>
+</button>

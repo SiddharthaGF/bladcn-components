@@ -1,7 +1,7 @@
 @blaze(fold: true)
 
 @props([
-    'asChild' => false,
+    'asChild' => true,
     'style' => null,
     'class' => null,
 ])
@@ -16,17 +16,22 @@
         $presetAttributes['style'] = $style;
     }
 
-    $alpineAttributes = [
+    $wrapperAttributes = [
         'x-ref' => 'trigger',
-        'x-on:click' => 'toggle($event)',
-        'x-bind:data-state' => "isOpen ? 'open' : 'closed'",
-        'x-bind:aria-expanded' => 'isOpen',
+        'x-init' => '$store.menu.bindTrigger(id, $el)',
+    ];
+
+    $triggerAttributes = [
+        'x-on:click' => 'toggleMenu()',
+        'x-bind:aria-expanded' => 'panelOpen',
         'aria-haspopup' => 'menu',
     ];
 @endphp
 
-<x-ui.abstract :as-child="$asChild"
-    {{ $attributes->merge($presetAttributes)->merge($alpineAttributes)->class($class) }}
-    default-tag="button">
-    {{ $slot }}
-</x-ui.abstract>
+<div {{ $attributes->only('class')->merge($wrapperAttributes)->class($class) }}>
+    <x-ui.abstract :as-child="$asChild"
+        {{ $attributes->except('class')->merge($presetAttributes)->merge($triggerAttributes) }}
+        default-tag="button">
+        {{ $slot }}
+    </x-ui.abstract>
+</div>

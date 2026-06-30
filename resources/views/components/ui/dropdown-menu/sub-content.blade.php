@@ -22,13 +22,16 @@
 @endphp
 
 <div {{ $attributes->merge($presetAttributes)->class([$presetClass, $class]) }}
+    role="menu"
+    x-bind:data-keyboard-nav="keyboardNav ? '' : null"
     x-bind:data-side="resolvedSubSide"
     x-bind:data-state="isSubOpen ? 'open' : 'closed'"
     x-bind:style="subPortalStyle"
     x-cloak
     x-on:mouseenter="cancelClose()"
     x-on:mouseleave="scheduleClose()"
+    x-on:pointermove="disableKeyboardNav()"
     x-ref="subContent"
-    x-show="isSubOpen">
+    x-show="isSubOpen && panelOpen">
     {{ $slot }}
 </div>
